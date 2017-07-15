@@ -22,6 +22,12 @@ public class CustomerFrame extends javax.swing.JFrame {
         this.carRentalFrame = new CarRentalFrame(); 
         initComponents();
     }
+    
+    
+    //populates customer table in frame
+    private void populate_CustomerTable(){
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,7 +115,7 @@ public class CustomerFrame extends javax.swing.JFrame {
 
     private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
         // TODO add your handling code here:
-        
+        //add logic 
         
         
         

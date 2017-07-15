@@ -10,14 +10,37 @@ package Business_logic;
  * @author Shazam
  */
 public class Customer {
+    private String ID;
     private String name;
     private String phone;
     private String address;
 
-    public Customer(String name, String phone, String address) {
+    public Customer(String ID, String name, String phone, String address) {
+        this.ID = ID;
         this.name = name;
         this.phone = phone;
         this.address = address;
     }
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
     
+    
+    public boolean contains(String data){
+        return (this.ID.contains(data) || (this.name.contains(data)) || (this.phone.contains(data)) || (this.address.contains(data)));
+                
+    }
 }

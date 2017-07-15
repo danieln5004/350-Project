@@ -12,8 +12,9 @@ package Business_logic;
  */
 public class main {
     public static void main(String[] args){
+    CarRentalSystem rent= new CarRentalSystem();
     
-        
+    
     
     }
 }

@@ -5,7 +5,10 @@
  */
 package Business_logic;
 
+//<<<<<<< Updated upstream
 import java.util.List;
+//=======
+//>>>>>>> Stashed changes
 import java.util.LinkedList;
 
 /**
@@ -15,14 +18,21 @@ import java.util.LinkedList;
 
 //Main Class that talks to other classes
 public class CarRentalSystem {
+//<<<<<<< Updated upstream
     List<Car> carList;
+    List<Customer> customerList;
 
     public CarRentalSystem() {
         carList = new LinkedList();
+        customerList = new LinkedList();
     }
  
     public List<Car> getCarList() {
         return carList;
+    }
+    
+    public List<Customer> getCustomerList(){
+        return customerList;
     }
     
     public void addCar(String make, String model, int year, Size size) {
@@ -63,5 +73,28 @@ public class CarRentalSystem {
         return false;
     }
 
+//=======
+    
+//>>>>>>> Stashed changes
+    
+    
+    
+   
+    public void addCustomer(String ID, String name, String phone, String address){
+        Customer customer = new Customer(ID ,name, phone, address);
+        customerList.add(customer);
+    }
+    
+    public List<Customer> CustomerSearch(String data) {
+        List<Customer> list = new LinkedList();
+        for (Customer customer: customerList) {
+            if (customer.contains(data)) {
+                list.add(customer);
+            }
+        }
+        return list;
+    }
+        
+    
     
 }
