@@ -35,7 +35,7 @@ public class CarRentalSystem {
     public List<Car> getRented() {
         List<Car> rented = new LinkedList();
         for (Car car: carList) {
-            if (!car.isAvailable()) {
+            if (car.isAvailable().equals(false)) {
                 rented.add(car);
             }
         }
