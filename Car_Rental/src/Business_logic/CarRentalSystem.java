@@ -49,6 +49,7 @@ public class CarRentalSystem {
         CarSpec spec = new CarSpec(make, model, year, size);
         String ID = Integer.toString(carList.size());
         Car car = new Car(ID, spec);
+        
         carList.add(car);
     }
     

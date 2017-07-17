@@ -8,7 +8,7 @@ package UserInterface;
 import Business_logic.Car;
 import Business_logic.CarRentalSystem;
 import Business_logic.Customer;
-import Business_logic.FindCarTableModel;
+import Business_logic.CarTableSelectableModel;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -27,8 +27,8 @@ import javax.swing.table.TableRowSorter;
 public class CarRentalFrame extends javax.swing.JFrame {
 
     private Customer customer;
-    private FindCarTableModel findCarTableModel;
-    private TableRowSorter<FindCarTableModel> findCarTableRowSorter;
+    private CarTableSelectableModel findCarTableModel;
+    private TableRowSorter<CarTableSelectableModel> findCarTableRowSorter;
     private CarRentalSystem system;
 
     /**
@@ -36,12 +36,13 @@ public class CarRentalFrame extends javax.swing.JFrame {
      */
     public CarRentalFrame(Customer customer, int selectedIndex, CarRentalSystem system) {
 
-        findCarTableModel = new FindCarTableModel();
-        findCarTableRowSorter = new TableRowSorter<>(findCarTableModel);
-
-        initComponents();
         this.customer = customer;
         this.system = system;
+        
+        findCarTableModel = new CarTableSelectableModel(system.getCarList());
+        findCarTableRowSorter = new TableRowSorter<>(findCarTableModel);
+        
+        initComponents();
         
         this.jLabel1.setText(customer.getName());
         this.RentalStatusTab.setSelectedIndex(selectedIndex);
@@ -64,13 +65,18 @@ public class CarRentalFrame extends javax.swing.JFrame {
             }
         });
         
+        populateTable();
         reloadRental();
         reloadReturned();
     }
     
+    public void populateTable() {
+        
+    }
+    
     public void reloadRental() {
         List<Car> rented = system.getRented();
-        FindCarTableModel model=new FindCarTableModel();
+        CarTableSelectableModel model=new CarTableSelectableModel(rented);
         for(Car car:rented)
             model.addCar(car);
         this.RentedCarTable.setModel(model);
@@ -79,7 +85,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
     public void reloadReturned() {
         
         List<Car> returned = system.getReturned();
-        FindCarTableModel model=new FindCarTableModel();
+        CarTableSelectableModel model=new CarTableSelectableModel(returned);
         for(Car car:returned)
             model.addCar(car);
         this.RentedCarTable.setModel(model);

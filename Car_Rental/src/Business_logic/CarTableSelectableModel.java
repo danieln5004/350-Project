@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author shado
  */
-public class FindCarTableModel extends AbstractTableModel {
+public class CarTableSelectableModel extends AbstractTableModel {
 
     private String[] columnNames = {"Select", "ID", "Make", "Model", "Year", "Size"};
 
@@ -21,17 +21,20 @@ public class FindCarTableModel extends AbstractTableModel {
 
     private List<Boolean> isSelected = new ArrayList<>();
 
-    public FindCarTableModel() {
+    public CarTableSelectableModel(List<Car> carsList) {
 
-        carsList.add(new Car("5321", new CarSpec("Nissan", "Altima", 2012, Size.small)));
-        carsList.add(new Car("4874", new CarSpec("Nissan", "Altima", 2012, Size.midsize)));
-        carsList.add(new Car("1234", new CarSpec("Volks Wagen", "Passat", 2002, Size.large)));
-        carsList.add(new Car("4444", new CarSpec("Mercedes", "Benz", 2000, Size.midsize)));
-
-        isSelected.add(false);
-        isSelected.add(false);
-        isSelected.add(false);
-        isSelected.add(false);
+//        carsList.add(new Car("5321", new CarSpec("Nissan", "Altima", 2012, Size.small)));
+//        carsList.add(new Car("4874", new CarSpec("Nissan", "Altima", 2012, Size.midsize)));
+//        carsList.add(new Car("1234", new CarSpec("Volks Wagen", "Passat", 2002, Size.large)));
+//        carsList.add(new Car("4444", new CarSpec("Mercedes", "Benz", 2000, Size.midsize)));
+        
+        for (Car car: carsList) {
+            isSelected.add(false);
+        }
+//        isSelected.add(false);
+//        isSelected.add(false);
+//        isSelected.add(false);
+//        isSelected.add(false);
 
     }
     
