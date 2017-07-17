@@ -41,8 +41,7 @@ public class Car {
     }
     
     public Boolean isAvailable() {
-        return true;
-//        return (rental.getStatus().equals(Status.returned));
+        return (rental.getStatus().equals(Status.returned));
     }
     
     public boolean contains(String data){
