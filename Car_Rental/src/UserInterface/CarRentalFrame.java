@@ -39,39 +39,62 @@ public class CarRentalFrame extends javax.swing.JFrame {
         this.customer = customer;
         this.system = system;
         
-        findCarTableModel = new CarTableSelectableModel(system.getCarList());
-        findCarTableRowSorter = new TableRowSorter<>(findCarTableModel);
-        
         initComponents();
+//        
+//        findCarTableModel = new CarTableSelectableModel(system.getCarList());
+//        findCarTableRowSorter = new TableRowSorter<>(findCarTableModel);
+        
         
         this.jLabel1.setText(customer.getName());
         this.RentalStatusTab.setSelectedIndex(selectedIndex);
 
-        FindCarTable.setRowSorter(findCarTableRowSorter);
-        FindCarTable.setRowSelectionAllowed(true);
-        FindCarTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//        FindCarTable.setRowSorter(findCarTableRowSorter);
+//        FindCarTable.setRowSelectionAllowed(true);
+//        FindCarTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//
+        
+        populateTable();
+        
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                        
+                        reloadRental();
+                        reloadReturned();
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        });
+        t.start();
+        
+    }
+    
+    public void populateTable() {
+        List<Car> cars = system.getCarList();
+        System.out.println("Car List Size: " + cars.size());
 
+        CarTableSelectableModel model = new CarTableSelectableModel(cars);
+        for(Car car: cars)
+            model.addCar(car);
+        
         FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                for (int i = 0; i < findCarTableModel.getRowCount(); ++i) {
+                for (int i = 0; i < model.getRowCount(); ++i) {
                     if (lsm.isSelectedIndex(i)) {
-                        findCarTableModel.setValueAt(true, i, 0);
+                        model.setValueAt(true, i, 0);
                     } else {
-                        findCarTableModel.setValueAt(false, i, 0);
+                        model.setValueAt(false, i, 0);
                     }
                 }
             }
         });
         
-        populateTable();
-        reloadRental();
-        reloadReturned();
-    }
-    
-    public void populateTable() {
-        
+        this.FindCarTable.setModel(model);
     }
     
     public void reloadRental() {
@@ -79,6 +102,21 @@ public class CarRentalFrame extends javax.swing.JFrame {
         CarTableSelectableModel model=new CarTableSelectableModel(rented);
         for(Car car:rented)
             model.addCar(car);
+        
+        FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                for (int i = 0; i < model.getRowCount(); ++i) {
+                    if (lsm.isSelectedIndex(i)) {
+                        model.setValueAt(true, i, 0);
+                    } else {
+                        model.setValueAt(false, i, 0);
+                    }
+                }
+            }
+        });
+        
         this.RentedCarTable.setModel(model);
     }
 
@@ -88,6 +126,8 @@ public class CarRentalFrame extends javax.swing.JFrame {
         CarTableSelectableModel model=new CarTableSelectableModel(returned);
         for(Car car:returned)
             model.addCar(car);
+        
+        
         this.ReturnedCarTable.setModel(model);
     }
 
@@ -129,7 +169,6 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
         RentCarButton.setText("Rent Car");
 
-        FindCarTable.setModel(findCarTableModel);
         jScrollPane1.setViewportView(FindCarTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
