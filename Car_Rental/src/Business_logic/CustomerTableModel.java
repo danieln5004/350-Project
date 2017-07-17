@@ -17,13 +17,11 @@ public class CustomerTableModel extends AbstractTableModel {
 
     private String[] columnNames = {"Name", "Telephone", "Address"};
 
-    private List<Customer> CustomersList;
+    private List<Customer> CustomersList = new ArrayList();
 
-    public CustomerTableModel() {
-        CustomersList = new ArrayList<>();
-        CustomersList.add(new Customer("Samir James", "816-878-1111", "6102 NE Antioch Rd"));
-        CustomersList.add(new Customer("Kim Sam", "816-847-888", "7123 Main Street"));
-        CustomersList.add(new Customer("Mehmet Scholl", "816-444-2387", "12 Rockhil Rd"));
+    public CustomerTableModel(List<Customer> customers) {
+        
+        this.CustomersList = customers;
 
     }
     

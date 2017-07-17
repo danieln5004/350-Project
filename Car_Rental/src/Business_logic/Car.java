@@ -17,6 +17,7 @@ public class Car {
     public Car(String ID, CarSpec spec){
         this.ID = ID;
         this.spec = spec;
+        this.rental = new Rental();
     }
 
     public String getID() {
@@ -40,7 +41,8 @@ public class Car {
     }
     
     public Boolean isAvailable() {
-        return (rental.getStatus() == Status.returned);
+        return true;
+//        return (rental.getStatus().equals(Status.returned));
     }
     
     public boolean contains(String data){

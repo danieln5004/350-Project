@@ -5,7 +5,10 @@
  */
 package UserInterface;
 
+import Business_logic.CarRentalSystem;
+import Business_logic.Customer;
 import Business_logic.CustomerTableModel;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableModel;
@@ -21,14 +24,18 @@ public class CustomerFrame extends javax.swing.JFrame {
     private final TableRowSorter<CustomerTableModel> customerTableSorter;
 
     CarRentalFrame carRentalFrame;
+    CarRentalSystem system;
+    List<Customer> customers;
    // private CustomersTableModel customersTableModel;
 
     /**
      * Creates new form CustomerFrame
      */
-    public CustomerFrame() {
+    public CustomerFrame(CarRentalSystem system, List<Customer> customers) {
         
-        customerTableModel = new CustomerTableModel();
+        this.customers = customers;
+        this.system = system;
+        customerTableModel = new CustomerTableModel(customers);
         customerTableSorter = new TableRowSorter<>(customerTableModel);
         
        
@@ -133,7 +140,7 @@ public class CustomerFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select a customer.");
             return;
         }
-        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 0); 
+        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 0, system); 
         this.carRentalFrame.setVisible(true);
         createCustomerDetailsFrame(0);
 
@@ -147,7 +154,7 @@ public class CustomerFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select a customer.");
             return;
         }
-        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 1); 
+        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 1, system); 
         this.carRentalFrame.setVisible(true);
         createCustomerDetailsFrame(1);
     }//GEN-LAST:event_Rented_CarsButtonActionPerformed
@@ -165,40 +172,6 @@ public class CustomerFrame extends javax.swing.JFrame {
         }
     } 
     
-    /**
-         * @param args the command line arguments
-         */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CustomerFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton RentCarButton;
