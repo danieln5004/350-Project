@@ -12,5 +12,5 @@ package Business_logic;
 public enum Size {
     small,
     midsize,
-    large,
+    large
 }

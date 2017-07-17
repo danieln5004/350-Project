@@ -5,17 +5,90 @@
  */
 package UserInterface;
 
+import Business_logic.Car;
+import Business_logic.CarRentalSystem;
+import Business_logic.Customer;
+import Business_logic.CarTableSelectableModel;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author Shazam
  */
 public class CarRentalFrame extends javax.swing.JFrame {
 
+    private Customer customer;
+    private CarTableSelectableModel findCarTableModel;
+    private TableRowSorter<CarTableSelectableModel> findCarTableRowSorter;
+    private CarRentalSystem system;
+
     /**
      * Creates new form CarRentalFrame
      */
-    public CarRentalFrame() {
+    public CarRentalFrame(Customer customer, int selectedIndex, CarRentalSystem system) {
+
+        this.customer = customer;
+        this.system = system;
+        
+        findCarTableModel = new CarTableSelectableModel(system.getCarList());
+        findCarTableRowSorter = new TableRowSorter<>(findCarTableModel);
+        
         initComponents();
+        
+        this.jLabel1.setText(customer.getName());
+        this.RentalStatusTab.setSelectedIndex(selectedIndex);
+
+        FindCarTable.setRowSorter(findCarTableRowSorter);
+        FindCarTable.setRowSelectionAllowed(true);
+        FindCarTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                for (int i = 0; i < findCarTableModel.getRowCount(); ++i) {
+                    if (lsm.isSelectedIndex(i)) {
+                        findCarTableModel.setValueAt(true, i, 0);
+                    } else {
+                        findCarTableModel.setValueAt(false, i, 0);
+                    }
+                }
+            }
+        });
+        
+        populateTable();
+        reloadRental();
+        reloadReturned();
+    }
+    
+    public void populateTable() {
+        
+    }
+    
+    public void reloadRental() {
+        List<Car> rented = system.getRented();
+        CarTableSelectableModel model=new CarTableSelectableModel(rented);
+        for(Car car:rented)
+            model.addCar(car);
+        this.RentedCarTable.setModel(model);
+    }
+
+    public void reloadReturned() {
+        
+        List<Car> returned = system.getReturned();
+        CarTableSelectableModel model=new CarTableSelectableModel(returned);
+        for(Car car:returned)
+            model.addCar(car);
+        this.RentedCarTable.setModel(model);
     }
 
     /**
@@ -56,17 +129,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
         RentCarButton.setText("Rent Car");
 
-        FindCarTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Select", "ID", "Make", "Model", "Year", "Size"
-            }
-        ));
+        FindCarTable.setModel(findCarTableModel);
         jScrollPane1.setViewportView(FindCarTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -225,6 +288,8 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
     private void SearchCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCarActionPerformed
         // TODO add your handling code here:
+        RowFilter<TableModel, Object> rf = RowFilter.regexFilter("(?i).*" + FindCarSearch.getText() + ".*", 1, 2, 3, 4, 5);
+        findCarTableRowSorter.setRowFilter(rf);
     }//GEN-LAST:event_SearchCarActionPerformed
 
     /**
@@ -257,7 +322,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CarRentalFrame().setVisible(true);
+                
             }
         });
     }

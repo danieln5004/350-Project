@@ -20,8 +20,41 @@ public class Car {
         return ID;
     }
     private String ID;
+    private CarSpec spec;
+    private Rental rental;
     
-    public Car(){
+    public Car(String ID, CarSpec spec){
         this.ID = ID;
+        this.spec = spec;
+        this.rental = new Rental();
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public CarSpec getSpec() {
+        return spec;
+    }
+    
+    public Rental getRental() {
+        return rental;
+    }
+    
+    public void rentCar() {
+        rental.rentCar();
+    }
+    
+    public void returnCar() {
+        rental.returnCar();;
+    }
+    
+    public Boolean isAvailable() {
+        return true;
+//        return (rental.getStatus().equals(Status.returned));
+    }
+    
+    public boolean contains(String data){
+        return ID.contains(data) || spec.contains(data);
     }
 }

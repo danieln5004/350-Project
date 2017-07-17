@@ -16,7 +16,7 @@ public class Rental {
     private Calendar returnDate;
     private Status status;
 
-    public Rental(Status status) {
+    public Rental() {
         this.status = status;
     }
     
@@ -31,18 +31,26 @@ public class Rental {
     public Status getStatus() {
         return this.status;
     }
-    
-    public void Rent(Calendar date) {
-        this.rentDate = date;
-        this.status = Status.rented;
+   
+    public Calendar getRentDate() {
+        return this.rentDate;
+    }
 
-    public Rental(Calendar rentDate, Calendar returnDate) {
-        this.rentDate = rentDate;
-        this.returnDate = returnDate;
+    public Calendar getReturnDate() {
+        return this.returnDate;
     }
     
-    public void Return(Calendar date) {
-        this.returnDate = date;
+    public Status getStatus() {
+        return this.status;
+    }
+    
+    public void rentCar() {
+        this.rentDate = Calendar.getInstance();
+        this.status = Status.rented;
+    }
+    
+    public void returnCar() {
+        this.returnDate = Calendar.getInstance();
         this.status = Status.returned;
     }
 }
