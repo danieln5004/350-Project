@@ -17,9 +17,21 @@ public class Rental {
     private Status status;
 
     public Rental() {
-        this.status = Status.returned;
+        this.status = status;
     }
     
+    public Calendar getRentDate() {
+        return this.rentDate;
+    }
+
+    public Calendar getReturnDate() {
+        return this.returnDate;
+    }
+    
+    public Status getStatus() {
+        return this.status;
+    }
+   
     public Calendar getRentDate() {
         return this.rentDate;
     }

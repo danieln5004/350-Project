@@ -10,6 +10,15 @@ package Business_logic;
  * @author Shazam
  */
 public class Car {
+    private int ID;
+
+    public Car(int ID) {
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
+    }
     private String ID;
     private CarSpec spec;
     private Rental rental;

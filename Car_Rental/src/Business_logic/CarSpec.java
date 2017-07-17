@@ -37,11 +37,4 @@ public class CarSpec {
     public Size getSize() {
         return size;
     }
-      
-    public boolean contains(String data){
-        return (make.contains(data) || 
-                (model.contains(data)) || 
-                (""+year).contains(data)) ||
-                (size.toString().contains(data));
-    }
 }
