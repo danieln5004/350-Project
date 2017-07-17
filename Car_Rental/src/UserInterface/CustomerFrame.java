@@ -5,21 +5,21 @@
  */
 package UserInterface;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Shazam
  */
-
-
-
 public class CustomerFrame extends javax.swing.JFrame {
 
-    CarRentalFrame carRentalFrame; 
+    CarRentalFrame carRentalFrame;
+
     /**
      * Creates new form CustomerFrame
      */
     public CustomerFrame() {
-        this.carRentalFrame = new CarRentalFrame(); 
+        this.carRentalFrame = new CarRentalFrame();
         initComponents();
     }
 
@@ -51,6 +51,11 @@ public class CustomerFrame extends javax.swing.JFrame {
         });
 
         Rented_CarsButton.setText("Rented Car");
+        Rented_CarsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rented_CarsButtonActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,16 +114,26 @@ public class CustomerFrame extends javax.swing.JFrame {
 
     private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-        
+        createCustomerDetailsFrame(0);
+
         this.carRentalFrame.setVisible(true);
     }//GEN-LAST:event_RentCarButtonActionPerformed
 
+    private void Rented_CarsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rented_CarsButtonActionPerformed
+        // TODO add your handling code here:
+        createCustomerDetailsFrame(1);
+    }//GEN-LAST:event_Rented_CarsButtonActionPerformed
+
+    private void createCustomerDetailsFrame(int index) {
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a user.", "Please select a user.", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+    } 
+    
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

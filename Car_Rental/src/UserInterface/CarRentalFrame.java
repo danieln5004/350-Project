@@ -5,12 +5,15 @@
  */
 package UserInterface;
 
+import Business_logic.CarRentalSystem;
+
 /**
  *
  * @author Shazam
  */
 public class CarRentalFrame extends javax.swing.JFrame {
-
+       
+    CarRentalSystem system;
     /**
      * Creates new form CarRentalFrame
      */
