@@ -17,25 +17,27 @@ public class FindCarTableModel extends AbstractTableModel {
 
     private String[] columnNames = {"Select", "ID", "Make", "Model", "Year", "Size"};
 
-    private List<Car> carsList;
+    private List<Car> carsList = new ArrayList<>();
 
-    private List<Boolean> isSelected;
+    private List<Boolean> isSelected = new ArrayList<>();
 
     public FindCarTableModel() {
-
-        carsList = new ArrayList<>();
 
         carsList.add(new Car("5321", new CarSpec("Nissan", "Altima", 2012, Size.small)));
         carsList.add(new Car("4874", new CarSpec("Nissan", "Altima", 2012, Size.midsize)));
         carsList.add(new Car("1234", new CarSpec("Volks Wagen", "Passat", 2002, Size.large)));
         carsList.add(new Car("4444", new CarSpec("Mercedes", "Benz", 2000, Size.midsize)));
 
-        isSelected = new ArrayList<>();
         isSelected.add(false);
         isSelected.add(false);
         isSelected.add(false);
         isSelected.add(false);
 
+    }
+    
+    public void addCar(Car car) {
+        carsList.add(car);
+        isSelected.add(false);
     }
 
     @Override

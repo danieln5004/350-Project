@@ -25,6 +25,26 @@ public class CarRentalSystem {
         return carList;
     }
     
+    public List<Car> getRented() {
+        List<Car> rented = new LinkedList();
+        for (Car car: carList) {
+            if (!car.isAvailable()) {
+                rented.add(car);
+            }
+        }
+        return rented;
+    }
+    
+    public List<Car> getReturned() {
+        List<Car> returned = new LinkedList();
+        for (Car car: carList) {
+            if (car.isAvailable()) {
+                returned.add(car);
+            }
+        }
+        return returned;
+    }
+    
     public void addCar(String make, String model, int year, Size size) {
         CarSpec spec = new CarSpec(make, model, year, size);
         String ID = Integer.toString(carList.size());
