@@ -5,11 +5,12 @@
  */
 package Business_logic;
 
+
 /**
  *
  * @author Shazam
  */
-public class Customer {
+public class Customer{
     private String name;
     private String phone;
     private String address;
@@ -20,4 +21,16 @@ public class Customer {
         this.address = address;
     }
     
+    public String getName(){
+        return name;
+        
+    }
+    
+    public String getPhone(){
+        return phone;
+    }
+    
+    public String getAddress(){
+        return address;
+    }
 }
