@@ -18,9 +18,9 @@ public class main {
     public static void main(String[] args){
             
         List<Customer> customers = new ArrayList();
-        customers.add(new Customer("Samir James", "816-878-1111", "6102 NE Antioch Rd"));
-        customers.add(new Customer("Kim Sam", "816-847-888", "7123 Main Street"));
-        customers.add(new Customer("Mehmet Scholl", "816-444-2387", "12 Rockhil Rd"));
+        customers.add(new Customer("1","Samir James", "816-878-1111", "6102 NE Antioch Rd"));
+        customers.add(new Customer("2","Kim Sam", "816-847-888", "7123 Main Street"));
+        customers.add(new Customer("3","Mehmet Scholl", "816-444-2387", "12 Rockhil Rd"));
         
         CarRentalSystem system = new CarRentalSystem();
         
