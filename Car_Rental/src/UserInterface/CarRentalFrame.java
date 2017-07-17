@@ -88,7 +88,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
         CarTableSelectableModel model=new CarTableSelectableModel(returned);
         for(Car car:returned)
             model.addCar(car);
-        this.RentedCarTable.setModel(model);
+        this.ReturnedCarTable.setModel(model);
     }
 
     /**
