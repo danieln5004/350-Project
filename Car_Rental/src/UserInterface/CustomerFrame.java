@@ -5,22 +5,35 @@
  */
 package UserInterface;
 
+import Business_logic.CustomerTableModel;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author Shazam
  */
-
-
-
 public class CustomerFrame extends javax.swing.JFrame {
+    
+    private final CustomerTableModel customerTableModel;
+    private final TableRowSorter<CustomerTableModel> customerTableSorter;
 
-    CarRentalFrame carRentalFrame; 
+    CarRentalFrame carRentalFrame;
+   // private CustomersTableModel customersTableModel;
+
     /**
      * Creates new form CustomerFrame
      */
     public CustomerFrame() {
-        this.carRentalFrame = new CarRentalFrame(); 
+        
+        customerTableModel = new CustomerTableModel();
+        customerTableSorter = new TableRowSorter<>(customerTableModel);
+        
+       
         initComponents();
+        jTable1.setRowSorter(customerTableSorter);
     }
     
     
@@ -48,6 +61,11 @@ public class CustomerFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         SearchButton.setText("Search");
+        SearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchButtonActionPerformed(evt);
+            }
+        });
 
         RentCarButton.setText("Rent Car");
         RentCarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -57,18 +75,13 @@ public class CustomerFrame extends javax.swing.JFrame {
         });
 
         Rented_CarsButton.setText("Rented Car");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Name", "Telephone", "Address"
+        Rented_CarsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rented_CarsButtonActionPerformed(evt);
             }
-        ));
+        });
+
+        jTable1.setModel(customerTableModel);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,16 +128,46 @@ public class CustomerFrame extends javax.swing.JFrame {
 
     private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
         // TODO add your handling code here:
-        //add logic 
-        
-        
-        
+
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a customer.");
+            return;
+        }
+        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 0); 
+        this.carRentalFrame.setVisible(true);
+        createCustomerDetailsFrame(0);
+
         this.carRentalFrame.setVisible(true);
     }//GEN-LAST:event_RentCarButtonActionPerformed
 
+    private void Rented_CarsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rented_CarsButtonActionPerformed
+        // TODO add your handling code here:
+        
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a customer.");
+            return;
+        }
+        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 1); 
+        this.carRentalFrame.setVisible(true);
+        createCustomerDetailsFrame(1);
+    }//GEN-LAST:event_Rented_CarsButtonActionPerformed
+
+    private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
+        // TODO add your handling code here:
+        RowFilter<TableModel, Object> rf = RowFilter.regexFilter("(?i).*" + SearchBar.getText() + ".*", 0, 1, 2);
+        customerTableSorter.setRowFilter(rf);
+    }//GEN-LAST:event_SearchButtonActionPerformed
+
+    private void createCustomerDetailsFrame(int index) {
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a user.", "Please select a user.", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+    } 
+    
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

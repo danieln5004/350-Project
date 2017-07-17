@@ -5,12 +5,13 @@
  */
 package Business_logic;
 
+
 /**
  *
  * @author Shazam
  */
-public class Customer {
-    private String ID;
+
+public class Customer{
     private String name;
     private String phone;
     private String address;
