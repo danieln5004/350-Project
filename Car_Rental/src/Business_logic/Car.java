@@ -45,6 +45,6 @@ public class Car {
     }
     
     public boolean contains(String data){
-        return ID.contains(data.toLowerCase()) || spec.contains(data.toLowerCase());
+        return ID.contains(data) || spec.contains(data);
     }
 }

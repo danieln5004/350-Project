@@ -53,7 +53,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
 //        FindCarTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 //
         
-        populateTable(system.getCarList());
+//        populateTable(system.getCarList());
         
         Thread t = new Thread(new Runnable() {
             public void run() {
@@ -69,29 +69,39 @@ public class CarRentalFrame extends javax.swing.JFrame {
             }
         });
         t.start();
-        
+        FindCarTable();
     }
     
-    public void populateTable(List<Car> cars) {
-        System.out.println("Car List Size: " + cars.size());
-
-        CarTableSelectableModel model = new CarTableSelectableModel(cars);
-        for(Car car: cars)
+//    public void populateTable(List<Car> cars) {
+//        System.out.println("Car List Size: " + cars.size());
+//
+//        CarTableSelectableModel model = new CarTableSelectableModel(cars);
+//        for(Car car: cars)
+//            model.addCar(car);
+//        
+//        FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//            @Override
+//            public void valueChanged(ListSelectionEvent e) {
+//                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+//                for (int i = 0; i < model.getRowCount(); ++i) {
+//                    if (lsm.isSelectedIndex(i)) {
+//                        model.setValueAt(true, i, 0);
+//                    } else {
+//                        model.setValueAt(false, i, 0);
+//                    }
+//                }
+//            }
+//        });
+//        FindCarTable();
+//        reloadRental();
+//        reloadReturned();
+//    }
+    
+    public void FindCarTable() {
+        List<Car> carList = system.getCarList();
+        CarTableSelectableModel model=new CarTableSelectableModel(carList);
+        for(Car car : carList)
             model.addCar(car);
-        
-        FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                for (int i = 0; i < model.getRowCount(); ++i) {
-                    if (lsm.isSelectedIndex(i)) {
-                        model.setValueAt(true, i, 0);
-                    } else {
-                        model.setValueAt(false, i, 0);
-                    }
-                }
-            }
-        });
         this.FindCarTable.setModel(model);
     }
     
@@ -330,8 +340,12 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
     private void SearchCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCarActionPerformed
         // TODO add your handling code here:
-        List<Car> foundCars = system.findCar(this.FindCarSearch.getText().toLowerCase());
-        populateTable(foundCars);
+        List<Car> foundCars = system.findCar(this.FindCarSearch.getText());
+        CarTableSelectableModel model=new CarTableSelectableModel(foundCars);
+        for(Car car : foundCars)
+            model.addCar(car);
+        this.FindCarTable.setModel(model);        
+//        populateTable(foundCars);
     }//GEN-LAST:event_SearchCarActionPerformed
 
     private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
