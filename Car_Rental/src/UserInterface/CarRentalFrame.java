@@ -53,7 +53,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
 //        FindCarTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 //
         
-        populateTable();
+        populateTable(system.getCarList());
         
         Thread t = new Thread(new Runnable() {
             public void run() {
@@ -72,8 +72,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
         
     }
     
-    public void populateTable() {
-        List<Car> cars = system.getCarList();
+    public void populateTable(List<Car> cars) {
         System.out.println("Car List Size: " + cars.size());
 
         CarTableSelectableModel model = new CarTableSelectableModel(cars);
@@ -93,7 +92,6 @@ public class CarRentalFrame extends javax.swing.JFrame {
                 }
             }
         });
-        
         this.FindCarTable.setModel(model);
     }
     
@@ -168,6 +166,11 @@ public class CarRentalFrame extends javax.swing.JFrame {
         });
 
         RentCarButton.setText("Rent Car");
+        RentCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RentCarButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(FindCarTable);
 
@@ -327,9 +330,14 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
     private void SearchCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCarActionPerformed
         // TODO add your handling code here:
-        RowFilter<TableModel, Object> rf = RowFilter.regexFilter("(?i).*" + FindCarSearch.getText() + ".*", 1, 2, 3, 4, 5);
-        findCarTableRowSorter.setRowFilter(rf);
+        List<Car> foundCars = system.findCar(this.FindCarSearch.getText().toLowerCase());
+        populateTable(foundCars);
     }//GEN-LAST:event_SearchCarActionPerformed
+
+    private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_RentCarButtonActionPerformed
 
     /**
      * @param args the command line arguments
