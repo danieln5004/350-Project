@@ -12,10 +12,11 @@ package Business_logic;
  */
 
 public class Customer{
+    private String ID;
     private String name;
     private String phone;
     private String address;
-    private String ID;
+    
 
     public Customer(String ID, String name, String phone, String address) {
         this.ID = ID;

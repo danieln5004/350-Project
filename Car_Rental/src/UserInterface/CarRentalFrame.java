@@ -94,6 +94,19 @@ public class CarRentalFrame extends javax.swing.JFrame {
             }
         });
         
+<<<<<<< Updated upstream
+=======
+        FindCarTable();
+        reloadRental();
+        reloadReturned();
+    }
+    
+    public void FindCarTable() {
+        List<Car> carList = system.getCarList();
+        CarTableSelectableModel model=new CarTableSelectableModel(carList);
+        for(Car car : carList)
+            model.addCar(car);
+>>>>>>> Stashed changes
         this.FindCarTable.setModel(model);
     }
     

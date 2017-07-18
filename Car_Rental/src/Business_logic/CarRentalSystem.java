@@ -25,7 +25,17 @@ public class CarRentalSystem {
     }
  
     public List<Car> getCarList() {
+<<<<<<< Updated upstream
         return this.carList;
+=======
+        List<Car> carList = new LinkedList();
+        for (Car car: carList) {
+             
+                carList.add(car);
+            
+        }
+        return carList;
+>>>>>>> Stashed changes
     }
     
     public List<Customer> getCustomerList(){
