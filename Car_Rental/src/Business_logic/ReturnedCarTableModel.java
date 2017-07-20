@@ -5,27 +5,36 @@
  */
 package Business_logic;
 
-import java.util.List;
+/**
+ *
+ * @author Shazam
+ */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author shado
+ * @author Shazam
  */
-public class CarTableSelectableModel extends AbstractTableModel {
-
-    private String[] columnNames = {"Select", "ID", "Make", "Model", "Year", "Size"};
-    
-    
+public class ReturnedCarTableModel extends AbstractTableModel {
     
     private String[] ReturnedColumns = {"ID", "Make", "Model", "Year", "Rented", "Returned"};
-
+    
+    private List<Customer> CustomersList = new ArrayList();
+    
     private List<Car> carsList;
 
     private List<Boolean> isSelected;
-
-    public CarTableSelectableModel(List<Car> carsList) {
+    
+    public ReturnedCarTableModel(List<Car> carsList) {
         
         this.carsList  = new ArrayList<>();
         this.isSelected = new ArrayList<>();
@@ -39,35 +48,24 @@ public class CarTableSelectableModel extends AbstractTableModel {
         carsList.add(car);
         isSelected.add(false);
     }
-
-    public Car getSelected() {
-        Car selectedCar = null;
-        int count = 0;
-        for (Boolean selected: isSelected) {
-            if (selected) {
-                selectedCar = this.carsList.get(count);
-            }
-            ++count;
-        }
-        return selectedCar;
-    }
-
+    
+    
     @Override
     public int getRowCount() {
         return carsList.size();
+        
+    }
+    
+    @Override
+    public String getColumnName(int columnIndex){
+        return ReturnedColumns[columnIndex];
     }
 
     @Override
     public int getColumnCount() {
-        return columnNames.length;
-
+        return ReturnedColumns.length;
     }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        return columnNames[columnIndex];
-    }
-
+    
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
@@ -93,10 +91,11 @@ public class CarTableSelectableModel extends AbstractTableModel {
                 return carsList.get(rowIndex).getSpec().getModel();
             case 4:
                 return carsList.get(rowIndex).getSpec().getYear();
+            case 5:
+                return carsList.get(rowIndex).getSpec().getRented();
             default:
-                return carsList.get(rowIndex).getSpec().getSize();
+                return carsList.get(rowIndex).getSpec().getReturnDate();
         }
-
     }
     
     @Override
@@ -105,4 +104,6 @@ public class CarTableSelectableModel extends AbstractTableModel {
             isSelected.set(rowIndex, (Boolean) aValue);
         }
     }
+    
 }
+

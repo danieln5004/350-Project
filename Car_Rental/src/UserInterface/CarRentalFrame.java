@@ -9,6 +9,8 @@ import Business_logic.Car;
 import Business_logic.CarRentalSystem;
 import Business_logic.Customer;
 import Business_logic.CarTableSelectableModel;
+import Business_logic.RentedCarTableModel;
+import Business_logic.ReturnedCarTableModel;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -72,30 +74,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
         FindCarTable();
     }
     
-//    public void populateTable(List<Car> cars) {
-//        System.out.println("Car List Size: " + cars.size());
-//
-//        CarTableSelectableModel model = new CarTableSelectableModel(cars);
-//        for(Car car: cars)
-//            model.addCar(car);
-//        
-//        FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-//            @Override
-//            public void valueChanged(ListSelectionEvent e) {
-//                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-//                for (int i = 0; i < model.getRowCount(); ++i) {
-//                    if (lsm.isSelectedIndex(i)) {
-//                        model.setValueAt(true, i, 0);
-//                    } else {
-//                        model.setValueAt(false, i, 0);
-//                    }
-//                }
-//            }
-//        });
-//        FindCarTable();
-//        reloadRental();
-//        reloadReturned();
-//    }
+
     
     public void FindCarTable() {
         List<Car> carList = system.getCarList();
@@ -103,14 +82,6 @@ public class CarRentalFrame extends javax.swing.JFrame {
         for(Car car : carList)
             model.addCar(car);
         this.FindCarTable.setModel(model);
-    }
-    
-    public void reloadRental() {
-        List<Car> rented = system.getRented();
-        CarTableSelectableModel model=new CarTableSelectableModel(rented);
-        for(Car car:rented)
-            model.addCar(car);
-        
         FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -124,19 +95,42 @@ public class CarRentalFrame extends javax.swing.JFrame {
                 }
             }
         });
+    }
+    
+    public void reloadRental() {
+        List<Car> rented = system.getRented();
+        //CarTableSelectableModel model=new CarTableSelectableModel(rented);
+        RentedCarTableModel rent = new RentedCarTableModel(rented);
+        for(Car car:rented)
+            rent.addCar(car);
         
-        this.RentedCarTable.setModel(model);
+        FindCarTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                for (int i = 0; i < rent.getRowCount(); ++i) {
+                    if (lsm.isSelectedIndex(i)) {
+                        rent.setValueAt(true, i, 0);
+                    } else {
+                        rent.setValueAt(false, i, 0);
+                    }
+                }
+            }
+        });
+        
+        this.RentedCarTable.setModel(rent);
     }
 
     public void reloadReturned() {
         
         List<Car> returned = system.getReturned();
-        CarTableSelectableModel model=new CarTableSelectableModel(returned);
+        //CarTableSelectableModel model=new CarTableSelectableModel(returned);
+        ReturnedCarTableModel returnedDate = new ReturnedCarTableModel(returned);
         for(Car car:returned)
-            model.addCar(car);
+            returnedDate.addCar(car);
         
         
-        this.ReturnedCarTable.setModel(model);
+        this.ReturnedCarTable.setModel(returnedDate);
     }
 
     /**
@@ -148,6 +142,24 @@ public class CarRentalFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        RentalCalendar = new javax.swing.JDialog();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSpinner2 = new javax.swing.JSpinner();
+        jSpinner3 = new javax.swing.JSpinner();
+        ComfirmRental = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        CarReturnedDate = new javax.swing.JDialog();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        returnCarButton = new javax.swing.JButton();
+        jSpinner4 = new javax.swing.JSpinner();
+        jSpinner5 = new javax.swing.JSpinner();
+        jSpinner6 = new javax.swing.JSpinner();
         RentalStatusTab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         FindCarSearch = new javax.swing.JTextField();
@@ -165,6 +177,122 @@ public class CarRentalFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         ReturnedCarTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel2.setText("Month");
+
+        jLabel3.setText("Day");
+
+        jLabel4.setText("Year");
+
+        ComfirmRental.setText("Confirm");
+
+        jLabel5.setText("Return Date");
+
+        javax.swing.GroupLayout RentalCalendarLayout = new javax.swing.GroupLayout(RentalCalendar.getContentPane());
+        RentalCalendar.getContentPane().setLayout(RentalCalendarLayout);
+        RentalCalendarLayout.setHorizontalGroup(
+            RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RentalCalendarLayout.createSequentialGroup()
+                .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RentalCalendarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(RentalCalendarLayout.createSequentialGroup()
+                                .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(31, 31, 31)
+                                .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ComfirmRental)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(RentalCalendarLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(RentalCalendarLayout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel5)))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+        RentalCalendarLayout.setVerticalGroup(
+            RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RentalCalendarLayout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(RentalCalendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(ComfirmRental)
+                .addGap(17, 17, 17))
+        );
+
+        jLabel6.setText("Month");
+
+        jLabel7.setText("Enter the Date Returned");
+
+        jLabel8.setText("Day");
+
+        jLabel9.setText("Year");
+
+        returnCarButton.setText("Return Car");
+
+        javax.swing.GroupLayout CarReturnedDateLayout = new javax.swing.GroupLayout(CarReturnedDate.getContentPane());
+        CarReturnedDate.getContentPane().setLayout(CarReturnedDateLayout);
+        CarReturnedDateLayout.setHorizontalGroup(
+            CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CarReturnedDateLayout.createSequentialGroup()
+                .addGroup(CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CarReturnedDateLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(47, 47, 47)
+                        .addGroup(CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSpinner6, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                            .addComponent(jSpinner5)
+                            .addComponent(jSpinner4)))
+                    .addGroup(CarReturnedDateLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel7))
+                    .addGroup(CarReturnedDateLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(returnCarButton)))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+        CarReturnedDateLayout.setVerticalGroup(
+            CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CarReturnedDateLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addGroup(CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(CarReturnedDateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(jSpinner6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(returnCarButton)
+                .addGap(30, 30, 30))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,6 +361,11 @@ public class CarRentalFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(RentedCarTable);
 
         ReturnCarButton.setText("Return Selected");
+        ReturnCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReturnCarButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -350,8 +483,15 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
     private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
         // TODO add your handling code here:
-        
+        this.RentalCalendar.setSize(300, 300);
+        this.RentalCalendar.setResizable(true);
+        this.RentalCalendar.setVisible(true);
     }//GEN-LAST:event_RentCarButtonActionPerformed
+
+    private void ReturnCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnCarButtonActionPerformed
+        // TODO add your handling code here:
+        this.CarReturnedDate.setVisible(true);
+    }//GEN-LAST:event_ReturnCarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,15 +529,26 @@ public class CarRentalFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog CarReturnedDate;
+    private javax.swing.JButton ComfirmRental;
     private javax.swing.JTextField FindCarSearch;
     private javax.swing.JTable FindCarTable;
     private javax.swing.JButton RentCarButton;
+    private javax.swing.JDialog RentalCalendar;
     private javax.swing.JTabbedPane RentalStatusTab;
     private javax.swing.JTable RentedCarTable;
     private javax.swing.JButton ReturnCarButton;
     private javax.swing.JTable ReturnedCarTable;
     private javax.swing.JButton SearchCar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -406,5 +557,12 @@ public class CarRentalFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSpinner3;
+    private javax.swing.JSpinner jSpinner4;
+    private javax.swing.JSpinner jSpinner5;
+    private javax.swing.JSpinner jSpinner6;
+    private javax.swing.JButton returnCarButton;
     // End of variables declaration//GEN-END:variables
 }
