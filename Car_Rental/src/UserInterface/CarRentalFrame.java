@@ -454,7 +454,8 @@ public class CarRentalFrame extends javax.swing.JFrame {
                 .addComponent(RentalStatusTab)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+
+                      .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -490,6 +491,39 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
     private void ReturnCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnCarButtonActionPerformed
         // TODO add your handling code here:
+     
+        if (rentedCarTableModel.getSelectedRowsCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select some rows.");
+            return;
+        }
+
+        Calendar cal = null;
+        while (true) {
+            // Input return date
+            String returnDate = JOptionPane.showInputDialog(this, "Enter return date in dd/mm/yy format: ");
+            
+            if (returnDate == null) {
+                return;
+            }
+
+            // Check if date format is correct.
+            SimpleDateFormat format = new SimpleDateFormat("dd/mm/yy");
+            try {
+                Date d = format.parse(returnDate);
+                if (!returnDate.equals(format.format(d))) {
+                    throw new ParseException(returnDate, ERROR);
+                }
+                cal = format.getCalendar();
+
+                // If date format is correct, return the selected cars
+                rentedCarTableModel.returnSelectedCars(format.format(d));
+                JOptionPane.showMessageDialog(this, "Cars rented successfully.");
+                break;
+            } catch (ParseException | NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Invalid date entered. Please enter date in dd/mm/yy format only.");
+            }
+
+        }
         this.CarReturnedDate.setVisible(true);
     }//GEN-LAST:event_ReturnCarButtonActionPerformed
 
