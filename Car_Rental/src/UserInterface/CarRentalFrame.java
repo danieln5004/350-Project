@@ -491,7 +491,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
 
     private void ReturnCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnCarButtonActionPerformed
         // TODO add your handling code here:
-     
+        /**
         if (rentedCarTableModel.getSelectedRowsCount() == 0) {
             JOptionPane.showMessageDialog(this, "Please select some rows.");
             return;
@@ -523,7 +523,7 @@ public class CarRentalFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid date entered. Please enter date in dd/mm/yy format only.");
             }
 
-        }
+        }*/
         this.CarReturnedDate.setVisible(true);
     }//GEN-LAST:event_ReturnCarButtonActionPerformed
 
