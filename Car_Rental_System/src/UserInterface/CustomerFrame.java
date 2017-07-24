@@ -5,13 +5,14 @@
  */
 package UserInterface;
 
-import Business_logic.CarRentalSystem;
 import Business_logic.Customer;
+import Business_logic.CarRentalSystem;
 import Business_logic.CustomerTableModel;
-import java.util.List;
+
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
+import java.util.List;
 import javax.swing.table.TableModel;
+import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -19,34 +20,31 @@ import javax.swing.table.TableRowSorter;
  * @author Shazam
  */
 public class CustomerFrame extends javax.swing.JFrame {
-    
-    private final CustomerTableModel customerTableModel;
-    private final TableRowSorter<CustomerTableModel> customerTableSorter;
+    private CustomerTableModel customerTableModel;
+    private TableRowSorter<CustomerTableModel> customerTableSorter;
+
 
     CarRentalFrame carRentalFrame;
     CarRentalSystem system;
     List<Customer> customers;
-   // private CustomersTableModel customersTableModel;
+
+    //private CustomerTableModel customerTableModel;
+    //private TableRowSorter<CustomerTableModel> customerTableSorter;
 
     /**
      * Creates new form CustomerFrame
      */
     public CustomerFrame(CarRentalSystem system, List<Customer> customers) {
-        
         this.customers = customers;
         this.system = system;
+          
         customerTableModel = new CustomerTableModel(customers);
         customerTableSorter = new TableRowSorter<>(customerTableModel);
-        
-       
+
         initComponents();
+
         jTable1.setRowSorter(customerTableSorter);
-    }
-    
-    
-    //populates customer table in frame
-    private void populate_CustomerTable(){
-        
+
     }
 
     /**
@@ -135,9 +133,8 @@ public class CustomerFrame extends javax.swing.JFrame {
 
     private void RentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentCarButtonActionPerformed
         // TODO add your handling code here:
-
         if (jTable1.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Please select a customer.");
+            JOptionPane.showMessageDialog(this, "Please selecte a customer. ");
             return;
         }
         this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 0, system); 
@@ -147,31 +144,33 @@ public class CustomerFrame extends javax.swing.JFrame {
         this.carRentalFrame.setVisible(true);
     }//GEN-LAST:event_RentCarButtonActionPerformed
 
-    private void Rented_CarsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rented_CarsButtonActionPerformed
-        // TODO add your handling code here:
-        
-        if (jTable1.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Please select a customer.");
-            return;
-        }
-        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 1, system); 
-        this.carRentalFrame.setVisible(true);
-        createCustomerDetailsFrame(1);
-    }//GEN-LAST:event_Rented_CarsButtonActionPerformed
-
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         // TODO add your handling code here:
-        RowFilter<TableModel, Object> rf = RowFilter.regexFilter("(?i).*" + SearchBar.getText() + ".*", 0, 1, 2);
+        RowFilter<TableModel, Object> rf = RowFilter.regexFilter("(?i).*" + SearchBar.getText(), 0, 1, 2);
         customerTableSorter.setRowFilter(rf);
     }//GEN-LAST:event_SearchButtonActionPerformed
 
-    private void createCustomerDetailsFrame(int index) {
-        if (jTable1.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a user.", "Please select a user.", JOptionPane.INFORMATION_MESSAGE);
+    private void Rented_CarsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rented_CarsButtonActionPerformed
+        // TODO add your handling code here:
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please selecte a customer. ");
             return;
         }
-    } 
+        this.carRentalFrame = new CarRentalFrame(customerTableModel.getCustomer(jTable1.getSelectedRow()), 1, system); 
+
+        this.carRentalFrame.setVisible(true);
+        createCustomerDetailsFrame(1);
+
+    }//GEN-LAST:event_Rented_CarsButtonActionPerformed
     
+    private void createCustomerDetailsFrame(int index){
+        if(jTable1.getSelectedRow() == -1){
+            
+           JOptionPane.showMessageDialog(this, "Please select a user.", "Please select a user." ,JOptionPane.INFORMATION_MESSAGE);
+           return;
+        }
+   
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton RentCarButton;

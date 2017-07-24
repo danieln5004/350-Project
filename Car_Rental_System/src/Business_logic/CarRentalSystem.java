@@ -6,7 +6,6 @@
 package Business_logic;
 
 import java.util.List;
-
 import java.util.LinkedList;
 
 /**
@@ -31,35 +30,14 @@ public class CarRentalSystem {
     public List<Customer> getCustomerList(){
         return customerList;
     }
-
-    public List<Car> getRented() {
-        List<Car> rented = new LinkedList();
-        for (Car car: carList) {
-            if (car.isAvailable().equals(false)) {
-                rented.add(car);
-            }
-        }
-        return rented;
-    }
-    
-    public List<Car> getReturned() {
-        List<Car> returned = new LinkedList();
-        for (Car car: carList) {
-            if (car.isAvailable()) {
-                returned.add(car);
-            }
-        }
-        return returned;
-    }
     
     public void addCar(String make, String model, int year, Size size) {
         CarSpec spec = new CarSpec(make, model, year, size);
         String ID = Integer.toString(carList.size());
         Car car = new Car(ID, spec);
-        
         carList.add(car);
     }
-    
+    /**
     public List<Car> findCar(String data) {
         List<Car> list = new LinkedList();
         for (Car car: carList) {
@@ -89,24 +67,15 @@ public class CarRentalSystem {
             }
         }
         return false;
-    } 
-    
-   
+    }*/
+    public void addAllCars(List<Car> cars){
+        this.carList.addAll(cars);
+        
+    }
     public void addCustomer(String ID, String name, String phone, String address){
-        Customer customer = new Customer(ID ,name, phone, address);
+        Customer customer = new Customer ( ID, name , phone, address);
         customerList.add(customer);
     }
-    
-    public List<Customer> CustomerSearch(String data) {
-        List<Customer> list = new LinkedList();
-        for (Customer customer: customerList) {
-            if (customer.contains(data)) {
-                list.add(customer);
-            }
-        }
-        return list;
-    }
-        
-    
+
     
 }

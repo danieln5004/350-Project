@@ -4,46 +4,51 @@
  * and open the template in the editor.
  */
 package Business_logic;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Shazam
  */
-
-public class Customer{
+public class Customer {
     private String ID;
     private String name;
     private String phone;
     private String address;
-    
+    private List<Rental> rentalList;
 
-    public Customer(String ID, String name, String phone, String address) {
-        this.ID = ID;
+    public Customer(String ID , String name, String phone, String address) {
         this.name = name;
         this.phone = phone;
         this.address = address;
+        this.rentalList = new ArrayList<>();
+        
     }
-
-    public String getID() {
+    public String getID(){
         return ID;
     }
-
-    public String getName() {
+    public String getName(){
         return name;
     }
-
-    public String getPhone() {
+    
+    
+    
+    public String getPhone(){
         return phone;
     }
-
-    public String getAddress() {
+    
+        
+    public String getAddress(){
         return address;
     }
     
-    
-    public boolean contains(String data){
-        return (this.ID.contains(data) || (this.name.contains(data)) || (this.phone.contains(data)) || (this.address.contains(data)));
-                
+    public void addRental(Rental rental){
+        rentalList.add(rental);
     }
+    
+    public List<Rental> getRentalList(){
+        return rentalList;
+    }
+    
 }
